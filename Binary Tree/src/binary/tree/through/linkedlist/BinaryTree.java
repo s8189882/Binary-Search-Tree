@@ -22,12 +22,25 @@ public class BinaryTree<K extends Comparable<K>> {
 		return current;
 	}
 	
-	public int getSize() {
-		return this.getSizeRecursive(root);
+	public boolean searchNode(K key) {
+		return searchNodeRecursively(root, key);
+	}
+	
+	private boolean searchNodeRecursively(BinaryNode<K> current, K key) {
+		if(current == null)
+			return false;
+		int compareResult = key.compareTo(current.key);
+		if (compareResult == 0)
+			return true;
+		return compareResult < 0 ? searchNodeRecursively(current.left, key) : searchNodeRecursively(current.right, key);
 	}
 
-	private int getSizeRecursive(BinaryNode<K> current) {
-		return current == null ? 0 : 1 + this.getSizeRecursive(current.left) + this.getSizeRecursive(current.right);
+	public int getSize() {
+		return this.getSizeRecursively(root);
+	}
+
+	private int getSizeRecursively(BinaryNode<K> current) {
+		return current == null ? 0 : 1 + this.getSizeRecursively(current.left) + this.getSizeRecursively(current.right);
 	}
 	
 	public void printTree() {
